@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { BooksService } from './app.service';
 import {Book} from './FakeDatabase'
 
@@ -22,6 +22,12 @@ export class BooksController{
       const bookData=book;
       if(!book.author || !book.title || !book.publicationYear) return undefined; 
       return this.booksService.create(bookData);
+    }
+    @Put(':id')
+    updateBook(@Param('id')id:string ,@Body() book:Partial<Book>,):Book | undefined {
+
+      return this.booksService.update(+id,book)
 
     }
+
 }
